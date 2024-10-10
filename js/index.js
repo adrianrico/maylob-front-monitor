@@ -453,38 +453,77 @@ function fillTimeline(eventTime,eventLocation,eventStatus,eventPercentage,comple
         )   
     }else
     {
-        $("#main_timeline").append(
-            "<div class='eventContainer flexCentered'>"+
-            "<div class='eventCard-data'>"+
-            "<div class='flexCentered eventCard-time'>"+
-            "<p>"+eventTime+"</p>"+
-            "</div>"+
-            "<div class='flexCentered eventCard-steps '>"+
-            "<img src='img/truck.svg' alt='truck'>"+
-            "<p class='eventCard-step-percentage'>"+eventPercentage+"</p>"+
-            "</div>           "+
-            "<div class='flexCentered eventCard-dataContainer'>"+
-            "<div class='eventCard-eventLogo flexCentered'>"+
-            "<img src='img/ubicacion.svg' alt='truck'>"+
-            "</div>"+
-            "<div class='eventCard-eventInfo gray-text'>"+
-            eventLocation+
-            "</div>"+
-            "</div>"+
-            "<div class='flexCentered eventCard-dataContainer'>"+
-            "<div class='eventCard-eventLogo flexCentered'>"+
-            "<img src='img/inventory_img.svg' alt='truck'>"+
-            "</div>"+
-            "<div class=' eventCard-eventInfo gray-text'>"+
-            eventStatus+
-            "</div>"+
-            "</div>"+
-            "</div>"+
-            "<div class='eventCard-color orange-bg'></div>"+
-            "</div>"+
-            "<div class='eventPoint flexCentered '></div>"+
-            "<div class='eventPath'></div>"
-        )
+        if (!completed) 
+        {
+            $("#main_timeline").append(
+                "<div class='eventContainer flexCentered'>"+
+                "<div class='eventCard-data'>"+
+                "<div class='flexCentered eventCard-time'>"+
+                "<p>"+eventTime+"</p>"+
+                "</div>"+
+                "<div class='flexCentered eventCard-steps '>"+
+                "<img src='img/truck.svg' alt='truck'>"+
+                "<p class='eventCard-step-percentage'>"+eventPercentage+"</p>"+
+                "</div>           "+
+                "<div class='flexCentered eventCard-dataContainer'>"+
+                "<div class='eventCard-eventLogo flexCentered'>"+
+                "<img src='img/ubicacion.svg' alt='truck'>"+
+                "</div>"+
+                "<div class='eventCard-eventInfo gray-text'>"+
+                eventLocation+
+                "</div>"+
+                "</div>"+
+                "<div class='flexCentered eventCard-dataContainer'>"+
+                "<div class='eventCard-eventLogo flexCentered'>"+
+                "<img src='img/inventory_img.svg' alt='truck'>"+
+                "</div>"+
+                "<div class=' eventCard-eventInfo gray-text'>"+
+                eventStatus+
+                "</div>"+
+                "</div>"+
+                "</div>"+
+                "<div class='eventCard-color orange-bg'></div>"+
+                "</div>"+
+                "<div class='eventPoint flexCentered '></div>"+
+                "<div class='eventPath'></div>"
+            )   
+        } else 
+        {
+            $("#main_timeline").append(
+                "<div class='eventContainer flexCentered'>"+
+                "<div class='eventCard-data'>"+
+                "<div class='flexCentered eventCard-time'>"+
+                "<p class='green-text'>"+eventTime+"</p>"+
+                "</div>"+
+                "<div class='flexCentered eventCard-steps '>"+
+                "<img src='img/ok_logo.svg' alt='truck'>"+
+                "<p class='eventCard-step-percentage green-text'>"+eventPercentage+"</p>"+
+                "</div>           "+
+                "<div class='flexCentered eventCard-dataContainer'>"+
+                "<div class='eventCard-eventLogo flexCentered'>"+
+                "<img src='img/ubicacion.svg' alt='truck'>"+
+                "</div>"+
+                "<div class='eventCard-eventInfo green-text'>"+
+                eventLocation+
+                "</div>"+
+                "</div>"+
+                "<div class='flexCentered eventCard-dataContainer'>"+
+                "<div class='eventCard-eventLogo flexCentered'>"+
+                "<img src='img/inventory_img.svg' alt=''>"+
+                "</div>"+
+                "<div class=' eventCard-eventInfo green-text'>"+
+                eventStatus+
+                "</div>"+
+                "</div>"+
+                "</div>"+
+                "<div class='eventCard-color green-bg'></div>"+
+                "</div>"+
+                "<div class='eventPoint flexCentered '></div>"+
+                "<div class='eventPath'></div>"
+            )
+        }
+
+
     }
 
     

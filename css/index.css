@@ -458,6 +458,13 @@ main
 
 .row_cont > div img { height: 1rem; }
 
+#moniView
+{
+    position:absolute;
+    top: 3.5rem;
+
+    height: 90%;
+}
 
 /* #endregion [ MONI ] */
 
