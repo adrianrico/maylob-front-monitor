@@ -5,16 +5,6 @@
 
 ## EXTENDED CHANGE LOG:
 
->### INDEX (HTML)
-  > - Initial COMMIT
+
 >### JS
-  > - Initial COMMIT
-  
-  >> - #### GSAP
-  >>> - Initial COMMIT
-
->### IMG
-  >- initial COMMIT
-
->### CSS
-  >- initial COMMIT
+  > - Fixed visualization issue where section was displaced down from top...
