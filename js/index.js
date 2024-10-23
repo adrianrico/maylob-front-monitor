@@ -4,6 +4,7 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 
 // Needs to be global to clear automatic executuion instance...!
 var automatedSearchInstance
+var searchInstance
 
 //#region Timeline
 
@@ -57,9 +58,10 @@ $('#manSearch_btn').click(function()
                             }
                         }
 
+                    searchInstance = data.foundManeuver[0].maneuver_id    
                     automatedSearchInstance = setInterval(function()
                     {
-                        getEvents(maneuverID_input)
+                        getEvents(searchInstance)
                     }, 15000
                     )
 
