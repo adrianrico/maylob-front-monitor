@@ -258,11 +258,9 @@ $('#closeManeuverData_pop').click(function()
 $('#openGPS_pop').click(function()
 {
     $('#gps-pop').css('display','flex').hide().fadeIn(250); 
-
-    let maneuverID_input = $('#moniID_input').val().trim().toUpperCase()
-
+    
     $('#trackingMap').empty()
-    getGPS(maneuverID_input)
+    getGPS(searchInstance)
     
 })
 
