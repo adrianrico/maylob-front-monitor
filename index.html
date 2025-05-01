@@ -20,29 +20,35 @@
     <link rel="icon" type="image/x-icon" href="/img/truck_favicon.ico">
     <link rel="stylesheet" href="css/index.css">
 
-    <title>MAYLOB</title>
+    <title>MONITOR</title>
 </head>
 <body>
- 
+
 <header>
-    <div id="bannerLogo">
-        <img src="img/mainLogo_orange.svg" alt="truck logo">
-    </div>
-    <div id="bannerText" class="fade-in">
-        <p id="bannerText_prompt">¡Bienvenido!</p>
-    </div>
+    <img id="bannerLogo"src="img/mainLogo_orange.svg" alt="truck logo">
+    <p id="bannerText">MONITOR</p>
 </header>
 
-<main class="flexCentered vertical">
+<main class="flexCentered">
 
 <!--**************************************************
-    [ MONITOR VIEW ]
+[ MANEUVER SEARCH PAGE ]
 **************************************************-->
-<section id="moniSearch" class="">
-    <div class="view_100 flexCentered vertical">
-        <h1>Busca la maniobra.</h1>
-        <input type="text" name="moniID_input" id="moniID_input" placeholder="Ingresa ID de maniobra." class="textInput">
-        <button id="manSearch_btn" class="btn flexCentered top">buscar maniobra</button>
+<section id="search_view">
+    <div class="form">
+        <div id="form_info">
+            <img src="img/truck_bg_3.JPG" alt="truck logo">
+            <p class="">Bienvenido al monitor en línea, para iniciar la 
+                        búsqueda de tus maniobras asignadas ingresa 
+                        la llave de búsqueda en el campo de texto y después 
+                        presiona buscar maniobras. Recuerda que debe ser exactamente igual a la proporcionada.
+            </p>
+        </div>
+         
+        <div id="form_controls">
+            <input type="text" name="search_key_txt_input" placeholder="Ingresa tu nombre aquí." id="search_key_txt_input">
+            <button id="search_key_trigger_btn">Buscar maniobras</button>
+        </div>
     </div>
 </section>
 
@@ -51,103 +57,158 @@
 
 
 
-<section id="moniView" class="hidden">
-    
-    <div class="containersCard">
-        <div class="row_cont flexCentered">
-            <div class="cont_logo flexCentered">
-                <img src="img/container.svg" alt="size">
-            </div>
-            <div class="cont_data">
-                <p id="cont_data1" class="strong">-</p>
-            </div>
-        </div>
+<section id="moniView">
 
-        <div class="row_cont flexCentered">
-            <div class="cont_logo flexCentered">
-                <img src="img/container.svg" alt="size">
-            </div>
-            <div class="cont_data">
-                <p id="cont_data2" class="strong">-</p>
-            </div>
-        </div>
+<div id="maneuvuers_scrollableContainer" class="">
+<!-- 
+<div class="maneuver_item">
 
-        <div class="row_cont flexCentered">
-            <div class="cont_logo flexCentered">
-                <img src="img/container.svg" alt="size">
-            </div>
-            <div class="cont_data">
-                <p id="cont_data3" class="strong">-</p>
-            </div>
-        </div>
+    <div class="maneuver_top_row">
+        <table class="maneuver_main_table">
+            <tr>
+                <th class="tableData_cntr">1ER CONTENEDOR</th>
+                <th class="tableData_percentage">%</th>
+                <th class="tableData_location">UBICACIÓN</th>
+                <th class="tableData_status">ESTATUS</th>
+                <th class="tableData_client">CLIENTE</th>
+                <th class="tableData_mode">MODALIDAD</th>
+                <th class="tableData_dispatch">F. DESPACHO</th>
+                <th class="tableData_finish">F. TÉRMINO</th>
+            </tr>
+            <tr>
+                <td>contenido largo</td>
+                <td>####</td>
+                <td>contenido largo</td>
+                <td>contenido largo</td>
+                <td>contenido largo</td>
+                <td>SENCILLO</td>
+                <td>contenido largo</td>
+                <td>contenido largo</td>
+            </tr>
+        </table>
+        <button class="expand_btn">
+            <img src="img/nav_arrow_white.svg" alt="expand row arrow">
+        </button>
+    </div>
 
-        <div class="row_cont flexCentered">
-            <div class="cont_logo flexCentered">
-                <img src="img/container.svg" alt="size">
-            </div>
-            <div class="cont_data">
-                <p id="cont_data4" class="strong">-</p>
-            </div>
+    <div class="collapsable_row expandable">
+        <div class="maneuver_middle_row ">
+            <table class="man_general_details ">
+                <tr>
+                    <th>TRANSPORTISTA</th>
+                    <th>ECO</th>
+                    <th>PLACAS</th>
+                    <th>OPERADOR</th>
+                </tr>
+                <tr>
+                    <td>contenido largo</td>
+                    <td>contenido largo</td>
+                    <td>contenido largo</td>
+                    <td>contenido largo</td>
+                </tr>
+            </table>
+            <table class="man_general_details ">
+                <tr>
+                    <th>A. ADUANAL</th>
+                    <th>EJECUTIVA</th>
+                    <th>CAAT</th>
+                    <th>TERMINAL DE CARGA</th>
+                    <th>PATIO DE DESCARGA</th>
+                    <th>BLOQUE TURNO</th>
+                </tr>
+                <tr>
+                    <td>contenido largo</td>
+                    <td>contenido largo</td>
+                    <td>contenido largo</td>
+                    <td>contenido largo</td>
+                    <td>contenido largo</td>
+                    <td>contenido largo</td>
+                </tr>
+            </table>
         </div>
-    </div> 
-       
-    
-    <div id="main_timeline" class="view_70 timelineContainer">
         
-<!--    <div class="eventPoint flexCentered bold"></div>
-        <div class="eventPath"></div>
-        
-        <div class="eventContainer flexCentered red">
-
-            <div class="eventCard-data">
- 
-                <div class="flexCentered eventCard-time">
-                    <p>EVENT LONG DATE TIME</p>
+        <div class="maneuver_bot_row ">
+            <div class="maneuver_containers">
+                <div class="container_unit cu_1">
+                    <p class="">CONTAINER ID</p>
+                    <div class="container_unit_row">
+                        <p>TAMAÑO</p>
+                        <p>TIPO</p>
+                        <p>CONTENIDO</p>
+                    </div>
                 </div>
-
-                <div class="flexCentered eventCard-steps ">
-                    <img src="img/truck.svg" alt="truck">
-                    <p class="eventCard-step-percentage">nnn%</p>
+            
+                <div class="container_unit cu_2">
+                    <p class="">CONTAINER ID</p>
+                    <div class="container_unit_row">
+                        <p>TAMAÑO</p>
+                        <p>TIPO</p>
+                        <p>CONTENIDO</p>
+                    </div>
                 </div>
+            
+                <div class="container_unit cu_3">
+                    <p class="">CONTAINER ID</p>
+                    <div class="container_unit_row">
+                        <p>TAMAÑO</p>
+                        <p>TIPO</p>
+                        <p>CONTENIDO</p>
+                    </div>
+                </div>
+            
+                <div class="container_unit cu_4">
+                    <p class="">CONTAINER ID</p>
+                    <div class="container_unit_row">
+                        <p>TAMAÑO</p>
+                        <p>TIPO</p>
+                        <p>CONTENIDO</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="maneuver_options">
+                <button class="option_btn">
+                    <img src="img/ubicacion_white.svg" alt="expand row arrow">
+                </button>
                 
-                <div class="flexCentered eventCard-dataContainer">
-                    <div class="eventCard-eventLogo flexCentered">
-                        <img src="img/ubicacion.svg" alt="truck">
-                    </div>
-                    <div class="eventCard-eventInfo">
-                        asd
-                    </div>
-                </div>
-
-                <div class="flexCentered eventCard-dataContainer">
-                    <div class="eventCard-eventLogo flexCentered">
-                        <img src="img/inventory_img.svg" alt="truck">
-                    </div>
-                    <div class=" eventCard-eventInfo">
-                        asd
-                    </div>
-                </div>
-
+                <button class="option_btn">
+                    <img src="img/tracking_white.svg" alt="expand row arrow">
+                </button>        
             </div>
-
-            <div class="eventCard-color orange-bg"></div>
-        </div> -->
-
-        
+        </div> 
     </div>
+    
+   
+</div>
+ -->
+</div>
 
-    <div class="btnsContainer flexCentered">
-        <button id="back2MS_MONI" class="back_btn flexCentered">
-            <img src="img/flecha.svg" alt="flecha" class="arrow">
-        </button>
-        <button id="openManeuverData_pop" class="btn_mini flexCentered">DETALLES</button>
-        <button id="openGPS_pop" class="btn_mini flexCentered">
-            <img src="img/ubicacion.svg" alt="location">
-        </button>
-    </div>
 </section>
 
 
+<div id="timeline_container">
+
+
+<!-- <div class="timeline_item left">
+    <div class="timeline_item_data">
+        <h4>EVENT TIME</h4>
+        <P>###%</P>
+        <P>EVENT LOCATION</P>
+        <P>EVENT STATUS</P>
+    </div>
+</div>
+
+<div class="timeline_item right">
+    <div class="timeline_item_data">
+        <h4>EVENT TIME</h4>
+        <P>###%</P>
+        <P>EVENT LOCATION</P>
+        <P>EVENT STATUS</P>
+    </div>
+</div>
+ -->
+
+</div>
 
 
 
@@ -277,66 +338,63 @@
 
 
 <!--**************************************************
-    [ ERROR POP-UP ]
+    [ NOTIFICATION POP-UP ]
 **************************************************-->
-<div class="view_100 hidden pop-error">
-    <div class="flexCentered popImageContainer error-color">
-        <img src="img/warning.svg" alt="error">
+<div class="notify_pop_up">
+    <div class="notify_container">
+        <div class="notify_img">
+            <!-- <img src="img/ok_white.svg" alt=""> -->
+            <!-- <img src="img/error_white.svg" alt=""> -->
+            <!-- <img src="img/warning_white.svg" alt=""> -->
+            <!-- <img src="" id="notify_logo"> -->
+        </div>
+        <div class="notify_content">
+            <div class="notify_text"></div>
+            <button id="close_notify" class="flexCentered">Entendido</button>
+        </div>
     </div>
-    <div class="popTextPadding flexCentered vertical">
-        <p id="errorText"></p>
-        <button id="closeError" class="flexCentered topMargin popBtn error-color">CERRAR</button>
-    </div>
-</div> 
+</div>
+
 
 
 
 
 <!--**************************************************
-    [ OK POP-UP ]
+    [ CUSTOM LOADER ]
 **************************************************-->
-<div class="view_100 hidden pop-ok">
-    <div class="flexCentered popImageContainer ok-color">
-        <img src="img/ok.svg" alt="error">
-    </div>
-    <div class="popTextPadding flexCentered vertical">
-        <p id="okText"></p>
-        <button id="closeOK" class="flexCentered topMargin popBtn ok-color">CERRAR</button>
-    </div>
-</div> 
-
-
-<!--**************************************************
-    [TOAST]
-**************************************************-->
-<div class="view_100 toast-error toast">
-    <div class="flexCentered popImageContainer error-color">
-        <img src="img/warning.svg" alt="error">
-    </div>
-    <div class="popTextPadding flexCentered vertical">
-        <p id="errorToastPrompt">-</p>
-    </div>
-</div>
-
-<div class="view_100 toast-ok toast">
-    <div class="flexCentered popImageContainer ok-color">
-        <img src="img/ok.svg" alt="check">
-    </div>
-    <div class="popTextPadding flexCentered vertical">
-        <p id="okToastPrompt">-</p>
-    </div>
-</div>
-
-<div class="view_100 toast-loader loader">
-    <div class="flexCentered popImageContainer">
-        <img id="truck" src="img/truck.svg" alt="check">
-    </div>
-    <div class="popTextPadding flexCentered vertical">
-        <p id="okToastPrompt">Ocupado, espere...</p>
-    </div>
+<div id="truck_loader">
+    <img id="truck" src="img/truck.svg" alt="check">
+    <p id="okToastPrompt">Procesando, casi llegamos...</p>
 </div>
 
 </main>
+
+
+
+
+
+<!--**************************************************
+    [ CUSTOM NAV BAR ]
+**************************************************-->
+<div id="navBarView">
+    <nav id="navBar">
+        <button id="goBack_btn" class="navBtn">
+            <img src="img/nav_arrow_white.svg" alt="">
+        </button>
+
+        <button id="save_btn" class="navBtn">
+            <img src="img/guardar.svg" alt="">
+        </button>
+    
+        <button id="goForward" class="navBtn">
+            <img src="img/nav_arrow_white.svg" alt="">
+        </button>
+
+        <button id="filter_btn" class="navBtn">
+            <img src="img/buscar.svg" alt="">
+        </button>
+    </nav>
+</div>    
 
 </body>
 </html>

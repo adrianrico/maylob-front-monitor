@@ -41,65 +41,118 @@ export function changeViewTitle(viewID,viewTitle)
 
 //#endregion fade animations...
 
-export function growAnimation(view2display)
+export function growAnimation(view2display,byClass,displayType)
 {
-    $("#"+view2display+"").removeClass('hidden');
+    if (byClass) 
+    {
+        $("#"+view2display+"").removeClass('hidden');
    
-    var displayView = gsap.timeline();
+        var displayView = gsap.timeline();
+        
+        displayView
+        .fromTo('#'+view2display+'',{scale:0}, { duration: 0.15,scale:1.05})
+        .fromTo('#'+view2display+'',{scale:1.05}, { duration: 0.15,scale:1})
+    } else 
+    {
+        $("#"+view2display+"").css('display',displayType);
+   
+        var displayView = gsap.timeline();
+        
+        displayView
+        .fromTo('#'+view2display+'',{scale:0}, { duration: 0.15,scale:1.05})
+        .fromTo('#'+view2display+'',{scale:1.05}, { duration: 0.15,scale:1})
+    }
+}
+
+export function shrinkAnimation(view2hide,byClass)
+{ 
+    if (byClass)
+    {
+        let shrinkView = gsap.timeline({
+            onComplete: function() 
+            {
+                $("#"+view2hide+"").addClass('hidden');
+            }
+        });
     
-    displayView
-    .fromTo('#'+view2display+'',{scale:0}, { duration: 0.15,scale:1.05})
-    .fromTo('#'+view2display+'',{scale:1.05}, { duration: 0.15,scale:1})
+        shrinkView
+        .fromTo('#'+view2hide+'',{scale:1}, { duration: 0.15,scale:1.05})
+        .fromTo('#'+view2hide+'',{scale:1.05}, { duration: 0.15,scale:0})
+
+    } else 
+    {
+        let shrinkView = gsap.timeline({
+            onComplete: function() 
+            {
+                $("#"+view2hide+"").css('display','none');
+            }
+        });
+    
+        shrinkView
+        .fromTo('#'+view2hide+'',{scale:1}, { duration: 0.15,scale:1.05})
+        .fromTo('#'+view2hide+'',{scale:1.05}, { duration: 0.15,scale:0})
+    }
 }
 
-export function shrinkAnimation(view2hide)
+
+
+
+
+//#region [ NAVIGATION FUNCTIONS ]
+
+export function navigateToView(originView,destinationView,classFlag,displayType)
 {
-    var hideView = gsap.timeline({
-        onComplete: function() 
-        {
-            $("#"+view2hide+"").addClass('hidden');
-        }
-    });
+    //Display NAVBAR with the needed buttons only...
+    displayNavBar(destinationView)
 
-    hideView
-    .fromTo('#'+view2hide+'',{scale:1}, { duration: 0.15,scale:1.05})
-    .fromTo('#'+view2hide+'',{scale:1.05}, { duration: 0.15,scale:0})
-}
-
-
-
-export function forwardNavigation(currentView,nextView)
-{
-    shrinkAnimation(currentView)
+    //Animations only...
+    shrinkAnimation(originView,classFlag)
     setTimeout(function() 
     {
-        growAnimation(nextView)
+        growAnimation(destinationView,classFlag,displayType)
     }, 300)
+
+    return destinationView
 }
 
+//#endregion [ NAVIGATION FUNCTIONS ]
+/****************************************************************************************************************/
 
 
-export function goBackAnimation(currentView, previousView)
+
+
+
+//#region [ SPECIFIC DISPLAY ANIMATIONS ]
+
+function displayNavBar(actualPage)
 {
-    var hideView = gsap.timeline({
-        onComplete: function() 
+    if (actualPage === 'search_view') 
+    {
+        shrinkAnimation('navBarView',false)
+    }else
+    {
+        setTimeout(function() 
         {
-            $("#"+currentView+"").addClass('hidden');
-
-            $("#"+previousView+"").removeClass('hidden');
-   
-            var displayView = gsap.timeline();
+            //To display only needed NAVBAR buttons...
+            switch (actualPage) 
+            {
+                case 'moniView':
+                    $('#goBack_btn').css('display','flex')
+                    $('#save_btn').css('display','none')
+                    $('#filter_btn').css('display','flex')
+                break;
             
-            displayView
-            .fromTo('#'+previousView+'',{scale:0}, { duration: 0.15,scale:1.05})
-            .fromTo('#'+previousView+'',{scale:1.05}, { duration: 0.15,scale:1})
-        }
-    });
-
-    hideView
-    .fromTo('#'+currentView+'',{scale:1}, { duration: 0.15,scale:1.05})
-    .fromTo('#'+currentView+'',{scale:1.05}, { duration: 0.15,scale:0})
+                default: break;
+            }
+            
+            growAnimation('navBarView',false,'flex')
+            growAnimation('navBar',false,'flex')
+        }, 300)
+    }
 }
+
+
+
 
 export function animateTruck(run)
 {
@@ -115,3 +168,6 @@ export function animateTruck(run)
         .fromTo('#truck',{y:1.15}, { duration: 0.1,y:0})
     }
 }
+
+//#endregion [ SPECIFIC DISPLAY ANIMATIONS ]
+/****************************************************************************************************************/
