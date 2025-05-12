@@ -3,18 +3,14 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 var current_page = ''
 
 // Used for local testing...
-var API_URL = 'http://localhost:8080'
+var API_URL = 'http://127.0.0.1:8080'
 //var API_URL = 'https://maylob-backend.onrender.com'
 
-// Needs to be global to clear automatic executuion instance...!
-var automatedSearchInstance
-var searchInstance
 
 
 
 
-
-//#region [ NAV BAR ]
+//#region    [ NAV BAR ]
 
 //Backward navigation...
 $('#goBack_btn').click(function()
@@ -58,6 +54,7 @@ $('#filter_btn').click(function()
 });
 
 //#endregion [ NAV BAR ]
+
 
 
 
@@ -120,13 +117,12 @@ $('#search_key_trigger_btn').click(function()
     }
 })
 
-
 function fillDashboard(parameters)
 {
     let isFinished   = validateField(parameters.man_termino) ? parameters.man_termino : "Aún en curso"
     let changeMainBG = isFinished != "Aún en curso" ? "mi_bg_2":"mi_bg_1"
     
-    let container_1_data = [parameters.manCont_1_id,parameters.manCont_1_size, parameters.manCont_1_peso,parameters.manCont_1_tipo, parameters.manCont_1_contenido]
+/*     let container_1_data = [parameters.manCont_1_id,parameters.manCont_1_size, parameters.manCont_1_peso,parameters.manCont_1_tipo, parameters.manCont_1_contenido]
     let c1_class
     switch (container_1_data[1]) 
     {
@@ -176,7 +172,7 @@ function fillDashboard(parameters)
         case '40':
             c4_class = container_4_data[2] > 26 && container_4_data[2] <= 30 ? "cu_2" : (container_4_data[2] > 30 ? "cu_3":"cu_1")
         break;
-    }
+    } */
  
    $('#maneuvuers_scrollableContainer').append(
     "<div class='maneuver_item "+changeMainBG+"'>"+
@@ -208,8 +204,9 @@ function fillDashboard(parameters)
     "</button>"+
     "</div>"+
     "<div class='collapsable_row expandable'>"+
-    "<div class='maneuver_middle_row '>"+
-    "<table class='man_general_details '>"+
+    "<div class='maneuver_details_row'>"+
+    "<div class='operative_details_container'>"+
+    "<table class='man_general_details'>"+
     "<tr>"+
     "<th>TRANSPORTISTA</th>"+
     "<th>ECO</th>"+
@@ -220,9 +217,12 @@ function fillDashboard(parameters)
     "<td>"+parameters.man_transportista+"</td>"+
     "<td>"+parameters.man_eco+"</td>"+
     "<td>"+parameters.man_placas+"</td>"+
-    "<td>"+parameters.man_operador+"S</td>"+
+    "<td>"+parameters.man_operador+"</td>"+
+    "</tr>"+
     "</table>"+
-    "<table class='man_general_details '>"+
+    "</div>"+
+    "<div class='general_details_container'>"+
+    "<table class='man_general_details'>"+
     "<tr>"+
     "<th>A. ADUANAL</th>"+
     "<th>EJECUTIVA</th>"+
@@ -241,253 +241,120 @@ function fillDashboard(parameters)
     "</tr>"+
     "</table>"+
     "</div>"+
-    "<div class='maneuver_bot_row '>"+
     "<div class='maneuver_containers'>"+
-    "<div class='container_unit "+c1_class+"'>"+
+    "<div class='container_unit cu_1'>"+
     "<p>"+parameters.manCont_1_id+"</p>"+
     "<div class='container_unit_row'>"+
-    "<p>TAMAÑO (FT): "+parameters.manCont_1_size+"</p>"+
-    "<p>PESO (TONS): "+parameters.manCont_1_peso+"</p>"+
+    "<p>"+parameters.manCont_1_size+"</p>"+
+    "<p>"+parameters.manCont_1_peso+"</p>"+
     "<p>"+parameters.manCont_1_tipo+"</p>"+
     "<p>"+parameters.manCont_1_contenido+"</p>"+
     "</div>"+
     "</div>"+
-    "<div class='container_unit "+c2_class+"'>"+
+    "<div class='container_unit cu_1'>"+
     "<p>"+parameters.manCont_2_id+"</p>"+
     "<div class='container_unit_row'>"+
-    "<p>TAMAÑO (FT): "+parameters.manCont_2_size+"</p>"+
-    "<p>PESO (TONS): "+parameters.manCont_2_peso+"</p>"+
+    "<p>"+parameters.manCont_2_size+"</p>"+
+    "<p>"+parameters.manCont_2_peso+"</p>"+
     "<p>"+parameters.manCont_2_tipo+"</p>"+
     "<p>"+parameters.manCont_2_contenido+"</p>"+
     "</div>"+
     "</div>"+
-    "<div class='container_unit "+c3_class+"'>"+
+    "<div class='container_unit cu_1'>"+
     "<p>"+parameters.manCont_3_id+"</p>"+
     "<div class='container_unit_row'>"+
-    "<p>TAMAÑO (FT): "+parameters.manCont_3_size+"</p>"+
-    "<p>PESO (TONS): "+parameters.manCont_3_peso+"</p>"+
+    "<p>"+parameters.manCont_3_size+"</p>"+
+    "<p>"+parameters.manCont_3_peso+"</p>"+
     "<p>"+parameters.manCont_3_tipo+"</p>"+
     "<p>"+parameters.manCont_3_contenido+"</p>"+
     "</div>"+
-    "</div>   "+
-    "<div class='container_unit "+c4_class+"''>"+
+    "</div>"+
+    "<div class='container_unit cu_1'>"+
     "<p>"+parameters.manCont_4_id+"</p>"+
     "<div class='container_unit_row'>"+
-    "<p>TAMAÑO (FT): "+parameters.manCont_4_size+"</p>"+
-    "<p>PESO (TONS): "+parameters.manCont_4_peso+"</p>"+
+    "<p>"+parameters.manCont_4_size+"</p>"+
+    "<p>"+parameters.manCont_4_peso+"</p>"+
     "<p>"+parameters.manCont_4_tipo+"</p>"+
     "<p>"+parameters.manCont_4_contenido+"</p>"+
     "</div>"+
     "</div>"+
     "</div>"+
-    "<div class='maneuver_options'>"+
-    "<button class='option_btn'>"+
-    "<img src='img/ubicacion_white.svg' alt='expand row arrow'>"+
-    "</button>"+
-    "<button class='option_btn'>"+
-    "<img src='img/tracking_white.svg' alt='expand row arrow'>"+
-    "</button>"+
+    "<div class='tracking_container'>"+
+    "<div id='timeline_container'>"+
+    fillTimeline(parameters)+
+    "</div>"+
+    "<div class='gps_container'>"+
+    "<div class='gps_map'>"+
+    "<embed src='"+parameters.man_gpsLink+"'>"+
+    "</div>"+
+    "</div>"+  
     "</div>"+
     "</div>"+
     "</div>"+
     "</div>"
     )
+
+    console.log(parameters.man_gpsLink);
 }
 
-//EXPAND MANEUVER ROW...
-$('#maneuvuers_scrollableContainer').on('click','.expand_btn', (e)=>
+function fillTimeline(maneuver_events)
+{
+    let tl_content = ''
+    let tl_class   = ''
+    
+    for (let index = 0; index < (maneuver_events.maneuver_events.length / 4); index++) 
     {
-        //$(e.target).closest('.maneuverContainer').find('.detailsRow').toggleClass('hidden')
-    
-        const $detailsRow = $(e.target).closest('.maneuver_item').find('.collapsable_row')
-    
-        if ($detailsRow.hasClass('expandable'))
-        {
-            $detailsRow
-            .removeClass('expandable') 
-            .css('height', 0) 
-            .animate(
-                { height: $detailsRow.get(0).scrollHeight },150,
-                    function () 
-                    {
-                        $(this).css('height', '');  
-                    }
-            );
-        }else
-        {
-            $detailsRow.animate(
-                { height: 0 }, 150, 
-                function () {
-                    $(this).addClass('expandable').css('height', ''); 
+        tl_class = index % 2 === 0 ? "left" : "right" 
+
+        tl_content+="<div class='timeline_item "+tl_class+"'>"+
+        "<div class='timeline_item_data'>"+
+        "<h4>"+maneuver_events.maneuver_events[index*4]+"</h4>"+
+        "<P>"+maneuver_events.maneuver_events[index*4+3]+"</P>"+
+        "<P>"+maneuver_events.maneuver_events[index*4+1]+"</P>"+
+        "<P>"+maneuver_events.maneuver_events[index*4+2]+"</P>"+
+        "</div>"+
+        "</div>"
+    }
+
+    return tl_content
+}
+
+//Expand MANEUVER ROW...
+$('#maneuvuers_scrollableContainer').on('click','.expand_btn', (e)=>
+{
+    //$(e.target).closest('.maneuverContainer').find('.detailsRow').toggleClass('hidden')
+
+    const $detailsRow = $(e.target).closest('.maneuver_item').find('.collapsable_row')
+
+    if ($detailsRow.hasClass('expandable'))
+    {
+        $detailsRow
+        .removeClass('expandable') 
+        .css('height', 0) 
+        .animate(
+            { height: $detailsRow.get(0).scrollHeight },150,
+                function () 
+                {
+                    $(this).css('height', '');  
                 }
-            );
-        }
-    
-    })
+        );
+    }else
+    {
+        $detailsRow.animate(
+            { height: 0 }, 150, 
+            function () {
+                $(this).addClass('expandable').css('height', ''); 
+            }
+        );
+    }
+
+})
 
 //#endregion [ LANDING PAGE / MANEUVERS PAGE ]
 
 
 
 
-//#region pop-ups
-
-// Details pop-up...
-$('#openManeuverData_pop').click(function()
-{
-    $('#maneuverData-pop').css('display','flex').hide().fadeIn(250); 
-
-    //LOADER..!
-    $('.toast-loader').css('display','grid').hide().fadeIn(200);
-    animationFunction.animateTruck(true)
-
-    /** - Step [1]  
-    *   - Search maneuver in DB by AJAX request...
-    */
-
-    let search_key_value = $('#moniID_input').val().trim().toUpperCase()
-
-    $.ajax({
-        //url: 'http://localhost:8080/man/findManeuver',
-        url: 'https://maylob-backend.onrender.com/man/findManeuver',
-        type: "get",
-        dataType: 'json',
-        data:search_key_value,
-        success : (function (data) 
-        {
-
-            if (data.message == '0') 
-            {
-               $('.pop-error').removeClass('hidden')
-               $('.pop-error').addClass('pop-up')
-               $('.pop-up').fadeIn(500)
-               $('#errorText').text("No se encontró la maniobra")
-               $('#errorText').append("<p>Revisa el ID ingresado.</p>") 
-
-            }else
-            {  
-                let containersLength = data.foundManeuver[0].maneuver_containers.length
-
-                for (let index = 0; index < containersLength; index++) 
-                {
-                    switch (index) 
-                    {
-                        case 0:
-                            validateField(data.foundManeuver[0].maneuver_containers[index])?
-                            (
-                            $('#container_A_ID').text(data.foundManeuver[0].maneuver_containers[index]),      
-                            $('#container_A_size').text(data.foundManeuver[0].maneuver_containers[index+1])      
-                            ):
-                            (
-                            $('#container_A_ID').text("Sin contenedor"),      
-                            $('#container_A_size').text("-")        
-                            )
-                        break;
-                        
-                        case 2:
-                            validateField(data.foundManeuver[0].maneuver_containers[index])?
-                            (
-                            $('#container_B_ID').text(data.foundManeuver[0].maneuver_containers[index]),      
-                            $('#container_B_size').text(data.foundManeuver[0].maneuver_containers[index+1])      
-                            ):
-                            (
-                            $('#container_B_ID').text("Sin contenedor"),      
-                            $('#container_B_size').text("-")        
-                            )
-                        break;
-
-                        case 4:
-                            validateField(data.foundManeuver[0].maneuver_containers[index])?
-                            (
-                            $('#container_C_ID').text(data.foundManeuver[0].maneuver_containers[index]),      
-                            $('#container_C_size').text(data.foundManeuver[0].maneuver_containers[index+1])      
-                            ):
-                            (
-                            $('#container_C_ID').text("Sin contenedor"),      
-                            $('#container_C_size').text("-")        
-                            )
-                        break;
-
-                        case 6:
-                            validateField(data.foundManeuver[0].maneuver_containers[index])?
-                            (
-                            $('#container_D_ID').text(data.foundManeuver[0].maneuver_containers[index]),      
-                            $('#container_D_size').text(data.foundManeuver[0].maneuver_containers[index+1])      
-                            ):
-                            (
-                            $('#container_D_ID').text("Sin contenedor"),      
-                            $('#container_D_size').text("-")        
-                            )    
-                        break;
-                    }
-                }
-
-                $('#maneuverID_prompt').text(data.foundManeuver[0].maneuver_id)
-                $('#maneuverDate_prompt').text(data.foundManeuver[0].maneuver_planned_date)
-                $('#maneuverClient_prompt').text(data.foundManeuver[0].maneuver_customer)
-                $('#maneuverSize_prompt').text(data.foundManeuver[0].maneuver_size)
-                $('#maneuverType_prompt').text(data.foundManeuver[0].maneuver_type)
-                $('#maneuverOrigin_prompt').text(data.foundManeuver[0].maneuver_origin)
-                $('#maneuverDestination_prompt').text(data.foundManeuver[0].maneuver_destination)
-                $('#maneuverOperator_prompt').text(data.foundManeuver[0].maneuver_operator)
-                
-            }              
-        }),
-
-        error: function(serverResponse) 
-        {   
-            //console.log(serverResponse);
-            $('#errorToastPrompt').text("Error al conectar con el servidor")
-            $('.toast-error').css('display','grid').hide().fadeIn(200).delay(2000).fadeOut(200);
-        },
-        complete: function() 
-        {
-            $('.toast-loader').fadeOut(500)
-            animationFunction.animateTruck(false)
-        }, 
-
-        async:false
-     })
-})
-
-
-$('#closeManeuverData_pop').click(function()
-{
-    $('#maneuverData-pop').fadeOut(250)
-})
-
-
-// Tracking pop-up...
-$('#openGPS_pop').click(function()
-{
-    $('#gps-pop').css('display','flex').hide().fadeIn(250); 
-
-    let search_key_value = $('#moniID_input').val().trim().toUpperCase()
-
-    $('#trackingMap').empty()
-    getGPS(search_key_value)
-    
-})
-
-$('#closeGPS-pop').click(function()
-{
-    $('#gps-pop').fadeOut(250)
-})
-
-
-//#endregion pop-ups
-
-
-/** BACKWARD NAVIGATION */
-$('#back2MS_MONI').click(function()
-{
-    clearInterval(automatedSearchInstance)
-
-    animationFunction.goBackAnimation('moniView','moniSearch')
-    animationFunction.changeViewTitle('bannerText_prompt','Monitor')
-})
-
-//#endregion [ MONITOR VIEW ]
 
 /**
  * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
@@ -496,246 +363,6 @@ $('#back2MS_MONI').click(function()
  * +                                                                                               +
  * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
  */ 
-
-function getGPS(maneuver_id)
-{
-
-    $.ajax({
-        //url: 'http://localhost:8080/man/getGPS',
-        url: 'https://maylob-backend.onrender.com/man/getGPS',
-        type: 'get',
-        contentType: 'application/json',
-        data: maneuver_id,
-        success : (function (data) 
-        {
-            console.log(data.trackingLink);
-
-            if (data.trackingLink!='POR DEFINIR') 
-            {
-                showGPS(data.trackingLink)        
-            }else
-            {
-                $('.pop-error').removeClass('hidden')
-                $('.pop-error').addClass('pop-up')
-                $('.pop-up').fadeIn(500)
-                $('#errorText').text("⛟ No hay TRACKING disponible.")
-                $('#errorText').append("<p>🛈 Estamos actualizando el tracking.</p>")
-            }
-        }),
-
-        error: function(XMLHttpRequest, textStatus, errorThrown) 
-        {  
-            $('.pop-error').removeClass('hidden')
-            $('.pop-error').addClass('pop-up')
-            $('.pop-up').fadeIn(500)
-            $('#errorText').text("⛟ LINK NO ACTUALIZADO")
-            $('#errorText').append("<p>🛈 El servidor no pudo procesar el guardado.</p>")
-        },
-
-        complete: function() 
-        {
-            $('.toast-loader').fadeOut(200)
-            animationFunction.animateTruck(false)
-        },
-    
-        //async:false
-    })     
-
-}
-
-
-
-
-
-function getEvents(search_key_value)
-{
-    //LOADER...!
-    $('.toast-loader').css('display','grid').hide().fadeIn(200);
-    animationFunction.animateTruck(true)
-
-    $.ajax({
-        //url: 'http://localhost:8080/man/findManeuver',
-        url: 'https://maylob-backend.onrender.com/man/findManeuver',
-        type: "get",
-        dataType: 'json',
-        data:search_key_value,
-        success : (function (data) 
-        {
-            if (data.message != '0') 
-            {
-                let foundEvents = data.foundManeuver[0].maneuver_events.length
-
-                $("#main_timeline").text("")
-
-                for (let index = (foundEvents-1); index > 0; index-=4) 
-                {
-                    if (data.foundManeuver[0].maneuver_events[index] === "100%")
-                    {
-                        fillTimeline(data.foundManeuver[0].maneuver_events[index-3],data.foundManeuver[0].maneuver_events[index-2],data.foundManeuver[0].maneuver_events[index-1],data.foundManeuver[0].maneuver_events[index],true)
-                    }else
-                    {
-                        fillTimeline(data.foundManeuver[0].maneuver_events[index-3],data.foundManeuver[0].maneuver_events[index-2],data.foundManeuver[0].maneuver_events[index-1],data.foundManeuver[0].maneuver_events[index],false)
-                    }
-                }
-            }              
-        }),
-
-        error: function(serverResponse) 
-        {   
-            //console.log(serverResponse);
-            $('#errorToastPrompt').text("⛟ Error al conectar con el servidor")
-            $('.toast-error').css('display','grid').hide().fadeIn(200).delay(2000).fadeOut(200);
-        },
-
-        complete: function() 
-        {
-            $('.toast-loader').fadeOut(500)
-            animationFunction.animateTruck(false)
-        }, 
-
-        //async:false
-    })
-}
-
-
-
-
-
-/** Execute this to fill tracking embeded...
- * 
- */
-function showGPS(maneuverGPSlink)
-{
-    $("#trackingMap").append(
-        
-        "<embed src='"+maneuverGPSlink+"' class='top view_100'>"
-    )
-}
-
-
-
-
-
-/** Execute this to fill timeline elements...
- * 
- */
-function fillTimeline(eventTime,eventLocation,eventStatus,eventPercentage,completed)
-{
-/*     if (eventPercentage === "0%") 
-    {
-        $("#main_timeline").append(
-            "<div class='eventContainer flexCentered'>"+
-            "<div class='eventCard-data'>"+
-            "<div class='flexCentered eventCard-time'>"+
-            "<p>PREPARANDO MANIOBRA</p>"+
-            "</div>"+
-            "<div class='flexCentered eventCard-steps '>"+
-            "<img src='img/truck.svg' alt='truck'>"+
-            "<p class='eventCard-step-percentage'>"+eventPercentage+"</p>"+
-            "</div>           "+
-            "<div class='flexCentered eventCard-dataContainer'>"+
-            "<div class='eventCard-eventLogo flexCentered'>"+
-            "<img src='img/ubicacion.svg' alt='truck'>"+
-            "</div>"+
-            "<div class='eventCard-eventInfo gray-text'>"+
-            eventLocation+
-            "</div>"+
-            "</div>"+
-            "<div class='flexCentered eventCard-dataContainer'>"+
-            "<div class='eventCard-eventLogo flexCentered'>"+
-            "<img src='img/inventory_img.svg' alt='truck'>"+
-            "</div>"+
-            "<div class=' eventCard-eventInfo gray-text'>"+
-            eventStatus+
-            "</div>"+
-            "</div>"+
-            "</div>"+
-            "<div class='eventCard-color orange-bg'></div>"+
-            "</div>"
-        )   
-    }else
-    {
-        if (!completed) 
-        {
-            $("#main_timeline").append(
-                "<div class='eventContainer flexCentered'>"+
-                "<div class='eventCard-data'>"+
-                "<div class='flexCentered eventCard-time'>"+
-                "<p>"+eventTime+"</p>"+
-                "</div>"+
-                "<div class='flexCentered eventCard-steps '>"+
-                "<img src='img/truck.svg' alt='truck'>"+
-                "<p class='eventCard-step-percentage'>"+eventPercentage+"</p>"+
-                "</div>           "+
-                "<div class='flexCentered eventCard-dataContainer'>"+
-                "<div class='eventCard-eventLogo flexCentered'>"+
-                "<img src='img/ubicacion.svg' alt='truck'>"+
-                "</div>"+
-                "<div class='eventCard-eventInfo gray-text'>"+
-                eventLocation+
-                "</div>"+
-                "</div>"+
-                "<div class='flexCentered eventCard-dataContainer'>"+
-                "<div class='eventCard-eventLogo flexCentered'>"+
-                "<img src='img/inventory_img.svg' alt='truck'>"+
-                "</div>"+
-                "<div class=' eventCard-eventInfo gray-text'>"+
-                eventStatus+
-                "</div>"+
-                "</div>"+
-                "</div>"+
-                "<div class='eventCard-color orange-bg'></div>"+
-                "</div>"+
-                "<div class='eventPoint flexCentered '></div>"+
-                "<div class='eventPath'></div>"
-            )   
-        } else 
-        {
-            $("#main_timeline").append(
-                "<div class='eventContainer flexCentered'>"+
-                "<div class='eventCard-data'>"+
-                "<div class='flexCentered eventCard-time'>"+
-                "<p class='green-text'>"+eventTime+"</p>"+
-                "</div>"+
-                "<div class='flexCentered eventCard-steps '>"+
-                "<img src='img/ok_logo.svg' alt='truck'>"+
-                "<p class='eventCard-step-percentage green-text'>"+eventPercentage+"</p>"+
-                "</div>           "+
-                "<div class='flexCentered eventCard-dataContainer'>"+
-                "<div class='eventCard-eventLogo flexCentered'>"+
-                "<img src='img/ubicacion.svg' alt='truck'>"+
-                "</div>"+
-                "<div class='eventCard-eventInfo green-text'>"+
-                eventLocation+
-                "</div>"+
-                "</div>"+
-                "<div class='flexCentered eventCard-dataContainer'>"+
-                "<div class='eventCard-eventLogo flexCentered'>"+
-                "<img src='img/inventory_img.svg' alt=''>"+
-                "</div>"+
-                "<div class=' eventCard-eventInfo green-text'>"+
-                eventStatus+
-                "</div>"+
-                "</div>"+
-                "</div>"+
-                "<div class='eventCard-color green-bg'></div>"+
-                "</div>"+
-                "<div class='eventPoint flexCentered '></div>"+
-                "<div class='eventPath'></div>"
-            )
-        }
-
-
-    }
- */
-    
-
-}
-
-
-
-
-
 //#region    [ AUXILIARY FUNCTIONS ]
 
 function validateField(fieldValue)

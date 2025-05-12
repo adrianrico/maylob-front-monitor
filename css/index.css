@@ -317,6 +317,12 @@ section
     {
         height: clamp(525px, 525px, 525px);
         width:  clamp(900px, 900px, 900px);
+
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+
         align-items:     center;
         justify-content: center;
         
@@ -434,7 +440,7 @@ section
     /* #endregion [ SEARCH PAGE ] */
 
 
-    /* #region    [ MANEUVERS SECTION ] */
+    /* #region [ MANEUVERS SECTION ] */
 
     #moniView { position: relative; }
 
@@ -461,8 +467,7 @@ section
         width:  100%;
 
         margin-top: 1.5rem;
-
-        padding: 0.5rem;
+        padding:    0.5rem;
 
         display:         flex;
         flex-direction:  column;
@@ -478,7 +483,8 @@ section
     }
 
     .mi_bg_1{background:#ffffff33;}
-    .mi_bg_2{background:#37bc9b88;}
+    /* .mi_bg_2{background:#37bc9b88;}*/
+    .mi_bg_2{background:#37bc68;}
 
     .maneuver_top_row
     {
@@ -520,6 +526,7 @@ section
     .maneuver_main_table td
     {
         font-size: clamp(0.8rem,0.8rem,0.8rem);
+        font-weight: 900;
 
         text-align: center;
 
@@ -576,8 +583,6 @@ section
     {
         width: 100%;
 
-        padding: 0.125rem;
-
         flex-direction:  column;
         align-items:     center;
         justify-content: center;
@@ -585,17 +590,19 @@ section
 
     .expandable { display: none; }
 
-    .maneuver_middle_row
+    .maneuver_details_row
     {
-        height: 8rem;
+        height: 42rem;
         width:  100%;
+
+        margin-top: 0.125rem;
 
         padding: 0.5rem;
 
         display:         flex;
         flex-direction:  column;
         align-items:     center;
-        justify-content: space-between;
+        justify-content: space-evenly;
 
         border-radius: 5px;
 
@@ -604,7 +611,7 @@ section
 
     .man_general_details
     {
-        height: 48%;
+        height: 100%;
         width:  100%;
 
         border-radius:  5px;
@@ -615,8 +622,8 @@ section
     .man_general_details th
     {
         font-size: clamp(0.8rem,0.8rem,0.8rem);
-
-        color: #f5a329;
+        
+        color:            #f5a329;
         background-color: #38506b;
     }
 
@@ -626,70 +633,37 @@ section
     .man_general_details td
     {
         font-size: clamp(0.8rem,0.8rem,0.8rem);
-
+        font-weight: 900;
         text-align: center;
 
         color: #233243;
     }
 
-    .maneuver_bot_row
+    /* #region [ HIDDEN TABLES AREA ]*/
+    .general_details_container, .operative_details_container
     {
-        height: 8rem;
+        height: 3rem;
         width:  100%;
 
-        padding: 0 0.5rem 0 0.5rem;
+        padding: 0.25rem;
 
         display:         flex;
         flex-direction:  row;
         align-items:     center;
-        justify-content: space-between;
-
-        border-radius: 5px;
-
-        background-color: #8792a0;
-    }
-
-    .maneuver_options
-    {
-        height: 7rem;
-        width:  10rem;
-
-        display:         flex;
-        flex-direction:  column;
-        align-items:     center;
-        justify-content: space-evenly;
+        justify-content: center;
 
         border-radius: 5px;
 
         background-color: #b7bcc2;
     }
+    /* #endregion [ HIDDEN TABLES AREA ]*/
 
-    .option_btn
-    {
-        height: 3rem;
-        width:  8rem;
 
-        border: none;
-
-        background-color: #f5a329;
-
-        border-radius: 25px;
-
-        transition: all ease-in 0.25s;
-    }
-
-    .option_btn img { height: 2rem; }
-
-    .option_btn:hover
-    {
-        cursor: pointer;
-        filter: brightness(.8);
-    }
-
+    /* #region [ CONTAINERS AREA ] */
     .maneuver_containers
     {
-        height: 7rem;
-        width:  44rem;
+        height: 8rem;
+        width:  100%;
 
         display:         flex;
         flex-direction:  row;
@@ -703,8 +677,8 @@ section
 
     .container_unit
     {
-        height: 6rem;
-        width:  10rem;
+        height: 6.5rem;
+        width:  12rem;
 
         display:        flex;
         flex-direction: column;
@@ -735,13 +709,221 @@ section
         padding-left: 0.25rem;
 
         display:            grid;
-        grid-template-rows: repeat(3, minmax(0 ,1fr));
+        grid-template-rows: repeat(4, minmax(0 ,1fr));
 
         font-size: clamp(0.8rem, 0.8rem, 0.8rem);
-        font-weight: 100;
+        font-weight: 900;
+    }
+    /* #endregion [ CONTAINERS AREA ] */
+
+
+    /* #region [ TRACKING AREA ] */
+    .tracking_container
+    {
+        height: 25rem;
+        width:  100%;
+    
+        padding: 0.5rem;
+
+        display: flex;
+    
+        border-radius: 5px;
+    
+        background-color: #b7bcc2;
+    }
+    
+    #timeline_container
+    {
+        height: 100%;
+        width:  40%;
+    
+        margin-right: 0.25rem;
+    
+        position: relative;
+    
+        /*DARK GLASS EFFECT*/
+        background:             rgba(120, 120, 120, 0.5);
+        box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
+        backdrop-filter:            blur(12px);
+        -webkit-backdrop-filter:    blur(12px);
+     
+        border-radius: 25px;
+    
+        overflow-y: scroll;
+    }
+    
+    #timeline_container::-webkit-scrollbar { display: none; }
+    
+    .timeline_item
+    {
+        height: 12rem;
+        width:  50%;
+    
+        position: relative;
+    
+        display:     flex;
+        align-items: center;
+    }
+    
+    .timeline_item:nth-child(odd)
+    {
+        padding-right: 2.5rem;
+        justify-content: end;
+    }
+    
+    .timeline_item:nth-child(odd)::before
+    {
+        content: '';
+    
+        height: 12rem;
+        width:  50px;
+    
+        position:  absolute;
+        top:       0;
+        right:     -25px;
+    
+        background-image: url(../img/road_tile.svg);
+        background-size: contain;
+    }
+    
+    .timeline_item:nth-child(even)
+    {
+        padding-left:    2.5rem;
+        justify-content: start;
+    }
+    
+    .timeline_item:nth-child(even)::before
+    {
+        content: '';
+    
+        height: 12rem;
+        width:  50px;
+    
+        position:  absolute;
+        top:       0;
+        left:      -25px;
+    
+        background-image: url(../img/road_tile.svg);
+        background-size: contain;
+    }
+    
+    .timeline_item::after 
+    {   
+        content: '';
+    
+        width:  4rem;
+        height: 4rem;
+        
+        position:  absolute;
+        top:       50%;
+        right:     -2rem;
+        transform: translateY(-50%);
+        
+        background-image: url(../img/truck_point.svg);
+    
+        z-index: 10;
+    }
+    
+    .left         { left: 0; }
+    .right        { right: -50%; }
+    .right::after { left: -2rem; }
+    
+    .timeline_item_data
+    {
+        height: 6rem;
+        width:  16rem;
+    
+        color:        #e5e5e5;
+        letter-spacing: 0.08rem;
+        
+        display:         flex;
+        flex-direction:  column;
+        align-items:     center;
+        justify-content: space-evenly;
+    
+        border-radius: 25px;
+    
+        background-color: #8792a0; /*To be dynamic...*/
+    }
+    
+    #timeline_container img { height: 4rem; }
+    
+    .gps_container
+    {
+        height: 100%;
+        width:  60%;
+    
+        margin-left: 0.25rem;
+        padding:     0.5rem ;
+    
+        display:         flex;
+        flex-direction:  column;
+        align-items:     center;
+        justify-content: space-between;
+    
+        /*DARK GLASS EFFECT*/
+        background:             rgba(120, 120, 120, 0.5);
+        box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
+        backdrop-filter:            blur(12px);
+        -webkit-backdrop-filter:    blur(12px);
+        
+        border-radius: 25px;
+    }
+    
+    .gps_btn
+    {
+        height: 3rem;
+        width:  8rem;
+    
+        border: none;
+    
+        background-color: #f5a329;
+    
+        border-radius: 25px;
+    
+        transition: all ease-in 0.25s;
+    }
+    
+    .gps_btn img { height: 2rem; }
+    
+    .gps_btn:hover
+    {
+        cursor: pointer;
+        filter: brightness(.8);
+    }
+    
+    .gps_map
+    {
+        height: 100%;
+        width:  100%;
+    
+        margin: 0.25rem;
+    
+        color:   #ed9843;
+        font-size: 0.8rem;
+    
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+    
+        /*DARK GLASS EFFECT*/
+        background:             rgba(120, 120, 120, 0.5);
+        box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
+        backdrop-filter:            blur(12px);
+        -webkit-backdrop-filter:    blur(12px);
+    
+        border-radius: 25px;
     }
 
-    .cu_1{background-color: #37bc9b;}
+    .gps_map embed
+    {
+        height: 100%;
+        width: 100%;
+    }
+    /* #endregion [ TRACKING AREA ] */
+
+    /* .cu_1{background-color: #37bc9b;}*/
+    .cu_1{background-color: #37bc68;}
     .cu_2{background-color: #f5a329;}
     .cu_3{background-color: #f74f4f;}
     .cu_4{background-color: #e5e5e5;}
@@ -830,158 +1012,6 @@ section
     /* #endregion [ NAV BAR ]*/
 
 }
-
-
-#timeline_container
-{
-    height: 98%;
-    width:  98%;
-
-    display: none;
-
-    position: absolute;
-
-    top:  50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-
-    /*DARK GLASS EFFECT*/
-    background:             rgba(120, 120, 120, 0.5);
-    box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
-    backdrop-filter:            blur(12px);
-    -webkit-backdrop-filter:    blur(12px);
-
-    border-radius: 25px;
-
-    overflow-y: scroll;
-}
-
-#timeline_container::-webkit-scrollbar { display: none; }
-
-.timeline_item
-{
-    height: 12rem;
-    width:  50%;
-
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-}
-
-.timeline_item:nth-child(odd)
-{
-    padding-right: 2.5rem;
-    justify-content: end;
-}
-
-.timeline_item:nth-child(odd)::before
-{
-    content: '';
-
-    height: 12rem;
-    width:  50px;
-
-    position:  absolute;
-    top:        0;
-    right:      -25px;
-
-    background-image: url(../img/road_tile.svg);
-    background-size: contain;
-}
-
-.timeline_item:nth-child(even)
-{
-    padding-left: 2.5rem;
-    justify-content: start;
-}
-
-.timeline_item:nth-child(even)::before
-{
-    content: '';
-
-    height: 12rem;
-    width:  50px;
-
-    position:  absolute;
-    top:       0;
-    left:      -25px;
-
-    background-image: url(../img/road_tile.svg);
-    background-size: contain;
-}
-
-
-
-
-
-.timeline_item::after 
-{   
-    content: '';
-
-    width:  4rem;
-    height: 4rem;
-    
-    position:  absolute;
-    top:       50%;
-    right:     -2rem;
-    transform: translateY(-50%);
-    
-    background-image: url(../img/truck_point.svg);
-
-    z-index: 10;
-}
-
-.left
-{
-    left: 0;
-}
-
-.right
-{
-    right: -50%;
-}
-
-.right::after
-{
-    left: -2rem;
-}
-
-.timeline_item_data
-{
-    height: 6rem;
-    width:  16rem;
-
-    color:        #e5e5e5;
-    letter-spacing: 0.08rem;
-    
-    display:         flex;
-    flex-direction:  column;
-    align-items:     center;
-    justify-content: space-evenly;
-
-    border-radius: 25px;
-
-    background-color: #8792a0; /*To be dynamic...*/
-}
-
-/* .timeline_item_data::after
-{
-    content: '';
-
-    height: 100%;
-    width:  50px;
-
-    position:  absolute;
-    top:       0;
-    left:      50%;
-    transform: translateX(-50%);
-
-    background-image: url(../img/road_tile.svg);
-} */
-
-#timeline_container img { height: 4rem; }
 
 /* [ DESKTOP DESIGN ]*/
 /****************************************************************************************************************/
