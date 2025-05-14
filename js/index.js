@@ -45,8 +45,8 @@ $('#filter_btn').click(function()
 {
     switch (current_page) 
     {
-        case 'maneuversPage':
-            animationFunction.growAnimation('filter_container',false,'flex')
+        case 'moniView':
+            animationFunction.growAnimation('filter_box',false,'flex')
         break;
     
         default: break;
@@ -61,6 +61,8 @@ $('#filter_btn').click(function()
 
 //#region    [ LANDING PAGE / MANEUVERS PAGE ]
 
+var allManeuvers
+var reusableManeuverID
 $('#search_key_trigger_btn').click(function()
 {
     let search_key_value = $('#search_key_txt_input').val().trim()
@@ -174,6 +176,11 @@ function fillDashboard(parameters)
         break;
     } */
  
+    let containers_assignation_data = [parameters.manCont_1_id,parameters.manCont_2_id, parameters.manCont_3_id,parameters.manCont_4_id]
+    let containers_classes          = ["","","",""]
+    
+    for (let index = 0; index < containers_assignation_data.length; index++) { containers_assignation_data[index] === 'NO ASIGNADO' ? containers_classes[index] = "cu_4" : containers_classes[index] = "cu_1" }
+
    $('#maneuvuers_scrollableContainer').append(
     "<div class='maneuver_item "+changeMainBG+"'>"+
     "<div class='maneuver_top_row'>"+
@@ -183,7 +190,6 @@ function fillDashboard(parameters)
     "<th class='tableData_percentage'>%</th>"+
     "<th class='tableData_location'>UBICACIÓN</th>"+
     "<th class='tableData_status'>ESTATUS</th>"+
-    "<th class='tableData_client'>CLIENTE</th>"+
     "<th class='tableData_mode'>MODALIDAD</th>"+
     "<th class='tableData_dispatch'>F. DESPACHO</th>"+
     "<th class='tableData_finish'>F. TÉRMINO</th>"+
@@ -193,7 +199,6 @@ function fillDashboard(parameters)
     "<td>"+parameters.maneuver_events[parameters.maneuver_events.length-1]+"</td>"+
     "<td>"+parameters.maneuver_current_location+"</td>"+
     "<td>"+parameters.maneuver_current_status+"</td>"+
-    "<td>"+parameters.man_cliente+"</td>"+
     "<td>"+parameters.man_modalidad+"</td>"+
     "<td>"+parameters.man_despacho+"</td>"+
     "<td>"+isFinished+"</td>"+
@@ -242,38 +247,38 @@ function fillDashboard(parameters)
     "</table>"+
     "</div>"+
     "<div class='maneuver_containers'>"+
-    "<div class='container_unit cu_1'>"+
+    "<div class='container_unit "+containers_classes[0]+"'>"+
     "<p>"+parameters.manCont_1_id+"</p>"+
     "<div class='container_unit_row'>"+
-    "<p>"+parameters.manCont_1_size+"</p>"+
-    "<p>"+parameters.manCont_1_peso+"</p>"+
+    "<p>TAMAÑO (FT) "+parameters.manCont_1_size+"</p>"+
+    "<p>PESO (TONS) "+parameters.manCont_1_peso+"</p>"+
     "<p>"+parameters.manCont_1_tipo+"</p>"+
     "<p>"+parameters.manCont_1_contenido+"</p>"+
     "</div>"+
     "</div>"+
-    "<div class='container_unit cu_1'>"+
+    "<div class='container_unit "+containers_classes[1]+"'>"+
     "<p>"+parameters.manCont_2_id+"</p>"+
     "<div class='container_unit_row'>"+
-    "<p>"+parameters.manCont_2_size+"</p>"+
-    "<p>"+parameters.manCont_2_peso+"</p>"+
+    "<p>TAMAÑO (FT) "+parameters.manCont_2_size+"</p>"+
+    "<p>PESO (TONS) "+parameters.manCont_2_peso+"</p>"+
     "<p>"+parameters.manCont_2_tipo+"</p>"+
     "<p>"+parameters.manCont_2_contenido+"</p>"+
     "</div>"+
     "</div>"+
-    "<div class='container_unit cu_1'>"+
+    "<div class='container_unit "+containers_classes[2]+"'>"+
     "<p>"+parameters.manCont_3_id+"</p>"+
     "<div class='container_unit_row'>"+
-    "<p>"+parameters.manCont_3_size+"</p>"+
-    "<p>"+parameters.manCont_3_peso+"</p>"+
+    "<p>TAMAÑO (FT) "+parameters.manCont_3_size+"</p>"+
+    "<p>PESO (TONS) "+parameters.manCont_3_peso+"</p>"+
     "<p>"+parameters.manCont_3_tipo+"</p>"+
     "<p>"+parameters.manCont_3_contenido+"</p>"+
     "</div>"+
     "</div>"+
-    "<div class='container_unit cu_1'>"+
+    "<div class='container_unit "+containers_classes[3]+"'>"+
     "<p>"+parameters.manCont_4_id+"</p>"+
     "<div class='container_unit_row'>"+
-    "<p>"+parameters.manCont_4_size+"</p>"+
-    "<p>"+parameters.manCont_4_peso+"</p>"+
+    "<p>TAMAÑO (FT) "+parameters.manCont_4_size+"</p>"+
+    "<p>PESO (TONS) "+parameters.manCont_4_peso+"</p>"+
     "<p>"+parameters.manCont_4_tipo+"</p>"+
     "<p>"+parameters.manCont_4_contenido+"</p>"+
     "</div>"+
@@ -293,8 +298,6 @@ function fillDashboard(parameters)
     "</div>"+
     "</div>"
     )
-
-    console.log(parameters.man_gpsLink);
 }
 
 function fillTimeline(maneuver_events)
@@ -302,7 +305,8 @@ function fillTimeline(maneuver_events)
     let tl_content = ''
     let tl_class   = ''
     
-    for (let index = 0; index < (maneuver_events.maneuver_events.length / 4); index++) 
+    //FORWARD...
+    /* for (let index = 0; index < (maneuver_events.maneuver_events.length / 4); index++) 
     {
         tl_class = index % 2 === 0 ? "left" : "right" 
 
@@ -312,6 +316,21 @@ function fillTimeline(maneuver_events)
         "<P>"+maneuver_events.maneuver_events[index*4+3]+"</P>"+
         "<P>"+maneuver_events.maneuver_events[index*4+1]+"</P>"+
         "<P>"+maneuver_events.maneuver_events[index*4+2]+"</P>"+
+        "</div>"+
+        "</div>"
+    } */
+
+    //BACKWARD...
+    for (let index = maneuver_events.maneuver_events.length / 4; index > 0; index--) 
+    {
+        tl_class = index % 2 === 0 ? "left" : "right" 
+
+        tl_content+="<div class='timeline_item "+tl_class+"'>"+
+        "<div class='timeline_item_data'>"+
+        "<h4>"+maneuver_events.maneuver_events[index*4 - 4]+"</h4>"+
+        "<P>"+maneuver_events.maneuver_events[index*4 - 3]+"</P>"+
+        "<P>"+maneuver_events.maneuver_events[index*4 - 1]+"</P>"+
+        "<P>"+maneuver_events.maneuver_events[index*4 - 2]+"</P>"+
         "</div>"+
         "</div>"
     }
@@ -350,6 +369,38 @@ $('#maneuvuers_scrollableContainer').on('click','.expand_btn', (e)=>
 
 })
 
+
+/* +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
+ * + [⚑] FILTER POP UP...                                                                          +                                                                +
+ * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+*/ 
+// Close FILTER POP-UP...
+$('#filter_close').click(function()
+{
+    switch (current_page) 
+    {
+        case 'moniView':
+            animationFunction.shrinkAnimation('filter_box',false,'none')
+        break;
+    
+        default: break;
+    }
+});
+
+// Clean FILTER POP-UP...
+$('#filter_clear').click(function()
+{
+    switch (current_page) 
+    {
+        case 'moniView':
+            resetForm('filter_row')
+        break;
+    
+        default: break;
+    }
+});
+
+
+
 //#endregion [ LANDING PAGE / MANEUVERS PAGE ]
 
 
@@ -376,6 +427,12 @@ function validateField(fieldValue)
         return true
     }          
 }
+
+
+
+
+
+function resetForm(formClass) { $("."+formClass+"").find(':input').val('') }
 
 
 

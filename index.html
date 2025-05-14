@@ -196,11 +196,8 @@
                         </div>
                     
                         <div class="gps_container">
-                            <!-- <button class="gps_btn">
-                                <img src="img/ubicacion_white.svg" alt="expand row arrow">
-                            </button> -->
                             <div class="gps_map">
-                                PRESIONA EL BOTÓN PARA VER EL SEGUIMIENTO EN TIEMPO REAL
+                                MAPA NO DISPONIBLE
                             </div>
                         </div>
                     </div>
@@ -215,6 +212,58 @@
 </section>
 
 
+
+<!--**************************************************
+    [ FILTER POP-UP ]
+**************************************************-->
+<div id="filter_box" class="pop_up">
+    <div id="filter_container" >
+        <div id="filter_fields">
+            <div class="filter_row">
+                   <label for="contedores_filter">CONTENEDORES</label>
+                <textarea placeholder="ID Cont 1,ID Cont 2...etc " id="contedores_filter"></textarea>
+            </div>
+
+            <div class="filter_row">
+                <label for="transportista_filter">TRANSPORTISTA</label>
+                <select id="transportista_filter" placeholder="Transportista a buscar."></select>
+            </div>
+
+            <div class="filter_row">
+                <label for="operador_filter">OPERADOR</label>
+                <select id="operador_filter" type="text" placeholder="Operador a buscar."></select>
+            </div>
+
+            <div class="filter_row">
+                <label for="placas_filter">PLACAS DE UNIDAD ECO</label>
+                <input id="placas_filter" type="text" placeholder="Placas de unidad a buscar."></input>
+            </div>
+            
+            <div class="filter_row">
+                <label for="from_date_filter">DESDE:</label> 
+                <input type="datetime-local" name="from_date_filter" id="from_date_filter">
+            </div>
+
+            <div class="filter_row">
+                <label for="until_date_filter">HASTA:</label> 
+                <input type="datetime-local" name="until_date_filter" id="until_date_filter">
+            </div>
+
+            <div class="filter_row_hor">
+            <label for="finished_filter">MOSTRAR MANIOBRAS FINALIZADAS</label>
+            <input id="finished_filter" type="checkbox">
+            </div>
+
+         
+        </div>
+
+        <div id="filter_options">
+            <button id="filter_close">CERRAR</button>
+            <button id="filter_clear">LIMPIAR</button>
+            <button id="filter_search">FILTRAR</button>
+        </div>
+    </div>
+</div>
 
 
 
