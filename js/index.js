@@ -424,60 +424,156 @@ $('#filter_clear').click(function()
 // Use filter to re-order maneuvers...
 $('#filter_search').click(function()
 {
-    $('#gps-pop').css('display','flex').hide().fadeIn(250); 
-
-    let maneuverID_input = $('#moniID_input').val().trim().toUpperCase()
-
-    $('#trackingMap').empty()
-    getGPS(maneuverID_input)
-    
-})
-
-$('#closeGPS-pop').click(function()
-{
-    $('#gps-pop').fadeOut(250)
-})
-
-
-//#endregion pop-ups
-
-
-/** BACKWARD NAVIGATION */
-$('#back2MS_MONI').click(function()
-{
-    clearInterval(automatedSearchInstance)
-
-    animationFunction.goBackAnimation('moniView','moniSearch')
-    animationFunction.changeViewTitle('bannerText_prompt','Monitor')
-})
-
-//#endregion [ MONITOR VIEW ]
-
-/**
- * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
- * +                                                                                               +
- * + [⚑] AUXILIARY FUCTIONS...                                                                     +
- * +                                                                                               +
- * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
- */ 
-
-function getGPS(maneuver_id)
-{
-    //LOADER...!
-    $('.toast-loader').css('display','grid').hide().fadeIn(200);
-    animationFunction.animateTruck(true)
-
-    $.ajax({
-        //url: 'http://localhost:8080/man/getGPS',
-        url: 'https://maylob-backend.onrender.com/man/getGPS',
-        type: 'get',
-        contentType: 'application/json',
-        data: maneuver_id,
-        success : (function (data) 
+    if(validateField(useFilter(allManeuvers)))
+    {
+        $('#maneuvuers_scrollableContainer').empty()
+        for (let index = 0; index < useFilter(allManeuvers).length; index++) 
         {
-            console.log(data.trackingLink);
+            fillDashboard(useFilter(allManeuvers)[index])    
+        }
+    }else
+    {
+        $('#maneuvuers_scrollableContainer').empty()
+        for (let index = 0; index < allManeuvers.length; index++) 
+        {
+            fillDashboard(allManeuvers[index]) 
+            
+            let notification_msg = ['¡No se encontró la maniobra! ⛟ ','* Tal vez no hay ningún dato de búsqueda ingresado.','* Probable dato incorrecto ingresado. Revisa los datos que se ingresaron.']
+            display_notification('warning', notification_msg)      
+        }
+    }
 
-            if (data.trackingLink!='POR DEFINIR') 
+    animationFunction.shrinkAnimation('filter_box',false,'none')
+    resetForm('filter_row')
+
+})
+
+function preloadSelectControls(allManeuvers)
+{   
+    //[1] Find different transporters...
+    let transporters = []
+    let operators    = [] 
+
+    for (let index = 0; index < allManeuvers.length; index++) 
+    {
+        transporters.push(allManeuvers[index].man_transportista)
+        operators.push(allManeuvers[index].man_operador)
+    }
+
+    let filtered_transporters = [...new Set(transporters)]
+    let filtered_operators    = [...new Set(operators)]
+    
+    //[2] Start filling controls...
+    $('#transportista_filter').empty()
+    $('#transportista_filter').append("<option value=''>SELECCIONA</option>")
+    for (let index = 0; index < filtered_transporters.length; index++) 
+    {
+        $('#transportista_filter').append(
+            "<option value='"+filtered_transporters[index]+"'>"+filtered_transporters[index]+"</option>"
+        )
+    } 
+    
+    $('#operador_filter').empty()
+    $('#operador_filter').append("<option value=''>SELECCIONA</option>")
+    for (let index = 0; index < filtered_operators.length; index++) 
+    {
+        $('#operador_filter').append(
+            "<option value='"+filtered_operators[index]+"'>"+filtered_operators[index]+"</option>"
+        )
+    } 
+
+}
+
+function useFilter(allManeuvers)
+{
+    /* [1]
+    *  Get all used filter values...
+    */
+
+    const availableFilters  = ['contedores_filter','transportista_filter','operador_filter','placas_filter','from_date_filter','until_date_filter','finished_filter']
+    let usedFilters         = []
+    let filteredMAneuvers   = []
+
+    for (let index = 0; index < availableFilters.length; index++) 
+    {
+        if (index != 6 ) 
+        {
+            validateField($('#'+availableFilters[index]).val()) ? 
+            usedFilters.push($('#'+availableFilters[index]).val())
+            :
+            usedFilters.push('0')
+        }else
+        {
+            $('#'+availableFilters[index]).is(":checked") ?
+            usedFilters.push($('#'+availableFilters[index]).val())
+            :
+            usedFilters.push('0')
+        }
+    }
+    console.log(usedFilters);
+    /* - Step[2]  
+    *  - Start filtering to return new array... 
+    */
+
+    //Search only by CONTAINERS ID...
+    let containersID_search
+    if (usedFilters[0] != '0') 
+    {
+        containersID_search = usedFilters[0].split(",")
+        containersID_search = containersID_search.filter(nonEmpty => nonEmpty !=="")
+        console.log(containersID_search);
+        for (let i = 0; i < containersID_search.length; i++) 
+        {
+            for (let index = 0; index < allManeuvers.length; index++) 
+            {
+                if (containersID_search[i] === allManeuvers[index].manCont_1_id || containersID_search[i] === allManeuvers[index].manCont_2_id || containersID_search[i] === allManeuvers[index].manCont_3_id || containersID_search[i] === allManeuvers[index].manCont_4_id) filteredMAneuvers.push(allManeuvers[index])
+            }
+        }
+        if (filteredMAneuvers.length > 0) return filteredMAneuvers
+    }
+
+    //Search only by TRANSPORTER...
+    if (usedFilters[1] != '0') 
+    {   
+        for (let index = 0; index < allManeuvers.length; index++) 
+        {
+            if (usedFilters[1] === allManeuvers[index].man_transportista) filteredMAneuvers.push(allManeuvers[index])
+        }
+        
+        if (filteredMAneuvers.length > 0) return filteredMAneuvers
+    }
+
+    //Search only by OPERATOR...
+    if (usedFilters[2] != '0') 
+    {   
+        for (let index = 0; index < allManeuvers.length; index++) 
+        {
+            if (usedFilters[2] === allManeuvers[index].man_operador) filteredMAneuvers.push(allManeuvers[index])
+        }
+        
+        if (filteredMAneuvers.length > 0) return filteredMAneuvers
+    }
+
+    //Search only by PLATES...
+    if (usedFilters[3] != '0') 
+    {
+        for (let index = 0; index < allManeuvers.length; index++) 
+        {
+            if (usedFilters[3] === allManeuvers[index].man_placas) filteredMAneuvers.push(allManeuvers[index])
+        }
+    
+        if (filteredMAneuvers.length > 0) return filteredMAneuvers
+    }
+
+    //Search only between two dates...
+    if (usedFilters[4] != '0') 
+    {  
+        let date_from = new Date(usedFilters[4]);
+
+        if (usedFilters[5] != '0') 
+        {   
+            let date_to = new Date(usedFilters[5]);
+            for (let index = 0; index < allManeuvers.length; index++) 
             {
                 let date_to_check = new Date (allManeuvers[index].man_despacho)
                 if ( date_to_check >= date_from && date_to_check <= date_to) filteredMAneuvers.push(allManeuvers[index])
