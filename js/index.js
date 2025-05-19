@@ -526,21 +526,6 @@ function getEvents(maneuver2search)
                 $('#timeline_container').empty()
                 $('#timeline_container').append(fillTimeline(foundEvents))
 
-/*                 
-                
-
-                $("#main_timeline").text("")
-
-                for (let index = (foundEvents-1); index > 0; index-=4) 
-                {
-                    if (data.foundManeuver[0].maneuver_events[index] === "100%")
-                    {
-                        fillTimeline(data.foundManeuver[0].maneuver_events[index-3],data.foundManeuver[0].maneuver_events[index-2],data.foundManeuver[0].maneuver_events[index-1],data.foundManeuver[0].maneuver_events[index],true)
-                    }else
-                    {
-                        fillTimeline(data.foundManeuver[0].maneuver_events[index-3],data.foundManeuver[0].maneuver_events[index-2],data.foundManeuver[0].maneuver_events[index-1],data.foundManeuver[0].maneuver_events[index],false)
-                    }
-                } */
             }              
         }),
 
